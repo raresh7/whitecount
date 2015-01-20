@@ -1,0 +1,18 @@
+C:\Documents and Settings\Computer Vision\My Documents\241-3\ImProcC#\ComputerVision\obj\Debug\ComputerVision.exe
+C:\Documents and Settings\Computer Vision\My Documents\241-3\ImProcC#\ComputerVision\obj\Debug\ComputerVision.pdb
+C:\Documents and Settings\Computer Vision\My Documents\241-3\ImProcC#\ComputerVision\bin\Debug\ComputerVision.exe
+C:\Documents and Settings\Computer Vision\My Documents\241-3\ImProcC#\ComputerVision\bin\Debug\ComputerVision.pdb
+C:\Documents and Settings\Computer Vision\My Documents\241-3\ImProcC#\ComputerVision\bin\Debug\ImageUtil.dll
+C:\Documents and Settings\Computer Vision\My Documents\241-3\ImProcC#\ComputerVision\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Computer Vision\My Documents\241-3\ImProcC#\ComputerVision\obj\Debug\ComputerVision.MainForm.resources
+C:\Documents and Settings\Computer Vision\My Documents\241-3\ImProcC#\ComputerVision\obj\Debug\ComputerVision.Properties.Resources.resources
+C:\Documents and Settings\Computer Vision\My Documents\241-3\ImProcC#\ComputerVision\obj\Debug\ComputerVision.csproj.GenerateResource.Cache
+C:\Student\241-3\ImProcC#\ComputerVision\obj\Debug\ComputerVision.exe
+C:\Student\241-3\ImProcC#\ComputerVision\obj\Debug\ComputerVision.pdb
+C:\Student\241-3\ImProcC#\ComputerVision\bin\Debug\ComputerVision.exe
+C:\Student\241-3\ImProcC#\ComputerVision\bin\Debug\ComputerVision.pdb
+C:\Student\241-3\ImProcC#\ComputerVision\bin\Debug\ImageUtil.dll
+C:\Student\241-3\ImProcC#\ComputerVision\obj\Debug\ResolveAssemblyReference.cache
+C:\Student\241-3\ImProcC#\ComputerVision\obj\Debug\ComputerVision.MainForm.resources
+C:\Student\241-3\ImProcC#\ComputerVision\obj\Debug\ComputerVision.Properties.Resources.resources
+C:\Student\241-3\ImProcC#\ComputerVision\obj\Debug\ComputerVision.csproj.GenerateResource.Cache
