@@ -18,7 +18,7 @@ namespace ComputerVision
         private Bitmap secondaryImage;
         private Bitmap image = null;
         private int TranslateX = 0;
-        private int TranslateY = 0;
+        private int TranslateY = 1;
         Color[,] pixels;
 
         public MainForm()
