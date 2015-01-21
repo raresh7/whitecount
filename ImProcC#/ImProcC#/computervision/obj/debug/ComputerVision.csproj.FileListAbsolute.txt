@@ -6,3 +6,12 @@ C:\Users\Bogdan\Dropbox\Facultate\anul 4\Semestrul 2\Computer Vision\ImProcC#\Co
 C:\Users\Bogdan\Dropbox\Facultate\anul 4\Semestrul 2\Computer Vision\ImProcC#\ComputerVision\obj\Debug\ComputerVision.csproj.GenerateResource.Cache
 C:\Users\Bogdan\Dropbox\Facultate\anul 4\Semestrul 2\Computer Vision\ImProcC#\ComputerVision\obj\Debug\ComputerVision.exe
 C:\Users\Bogdan\Dropbox\Facultate\anul 4\Semestrul 2\Computer Vision\ImProcC#\ComputerVision\obj\Debug\ComputerVision.pdb
+C:\Users\rares_000\Desktop\Licenta\Licenta\ImProcC#\ImProcC#\ComputerVision\bin\Debug\ComputerVision.exe
+C:\Users\rares_000\Desktop\Licenta\Licenta\ImProcC#\ImProcC#\ComputerVision\bin\Debug\ComputerVision.pdb
+C:\Users\rares_000\Desktop\Licenta\Licenta\ImProcC#\ImProcC#\ComputerVision\bin\Debug\ImageUtil.dll
+C:\Users\rares_000\Desktop\Licenta\Licenta\ImProcC#\ImProcC#\ComputerVision\obj\Debug\ComputerVision.csprojResolveAssemblyReference.cache
+C:\Users\rares_000\Desktop\Licenta\Licenta\ImProcC#\ImProcC#\ComputerVision\obj\Debug\ComputerVision.MainForm.resources
+C:\Users\rares_000\Desktop\Licenta\Licenta\ImProcC#\ImProcC#\ComputerVision\obj\Debug\ComputerVision.Properties.Resources.resources
+C:\Users\rares_000\Desktop\Licenta\Licenta\ImProcC#\ImProcC#\ComputerVision\obj\Debug\ComputerVision.csproj.GenerateResource.Cache
+C:\Users\rares_000\Desktop\Licenta\Licenta\ImProcC#\ImProcC#\ComputerVision\obj\Debug\ComputerVision.exe
+C:\Users\rares_000\Desktop\Licenta\Licenta\ImProcC#\ImProcC#\ComputerVision\obj\Debug\ComputerVision.pdb
