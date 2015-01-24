@@ -34,6 +34,7 @@ namespace ComputerVision
             image = new Bitmap(sSourceFileName);
             workImage = new FastImage(image);
             workImage1 = new FastImage(image);
+
             pixels = new Color[workImage1.Width, workImage1.Height];
         }
 
