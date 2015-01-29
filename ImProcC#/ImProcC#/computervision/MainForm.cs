@@ -1998,6 +1998,40 @@ namespace ComputerVision
             workImageFirst.Unlock();
         }
 
+        private void btnHue_Click(object sender, EventArgs e)
+        {
+            Color color;
+            workImage.Lock();
+            float hue, sat, bri;
+            for (int i = 0; i < workImage.Width; i++)
+            {
+                for (int j = 0; j < workImage.Height; j++)
+                {
+                    color = workImage.GetPixel(i, j);
+                    hue = color.GetHue();
+                    sat = color.GetSaturation();
+                    bri = color.GetBrightness();
+                    /*if (bri < 0.55  && sat >= 0.5) // 286 hue >= 210 && hue <= 330 &&
+                        workImage.SetPixel(i, j, Color.White);
+                    else
+                        workImage.SetPixel(i, j, Color.Black);
+                }*/
+
+                    if (color.G >= 60)
+                        if (hue >= 244 && hue <= 350 && bri < 0.66 && sat >=0.4)
+                            workImage.SetPixel(i, j, Color.White);
+                        else
+                            workImage.SetPixel(i, j, Color.Black);
+                    else  
+                         workImage.SetPixel(i, j, Color.White);
+                }
+            }
+
+            panelDestination.BackgroundImage = null;
+            panelDestination.BackgroundImage = workImage.GetBitMap();
+            workImage.Unlock();
+        }
+
 
 
     }
