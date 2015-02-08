@@ -13,6 +13,7 @@ namespace ComputerVision
     {
         private string sSourceFileName = "";
         private FastImage workImage;
+        private FastImage contourImage;
         private FastImage workImage1;
         private FastImage workImageSecondary;
         private Bitmap secondaryImage;
@@ -20,6 +21,8 @@ namespace ComputerVision
         private int TranslateX = 0;
         private int TranslateY = 1;
         Color[,] pixels;
+        private int[] contourY = {0, 1, 1, 1, 0, -1, -1, -1}, contourX = {-1, -1, 0, 1, 1, 1, 0, -1}; //posibil sa fie inversate
+
 
         public MainForm()
         {
@@ -34,6 +37,8 @@ namespace ComputerVision
             image = new Bitmap(sSourceFileName);
             workImage = new FastImage(image);
             workImage1 = new FastImage(image);
+            contourImage = new FastImage((Bitmap)image.Clone());
+            //contourImage = workImage;
             pixels = new Color[workImage1.Width, workImage1.Height];
         }
 
@@ -1062,105 +1067,28 @@ namespace ComputerVision
 
             workImage.Unlock();
         }
-
-        private FastImage Kirsch(FastImage image)
-        {
-
-            FastImage grayImage = new FastImage((Bitmap)this.image.Clone());
-            grayImage.Lock();
-            FastImage newImage = new FastImage((Bitmap)this.image.Clone());
-            newImage.Lock();
-
-            for (int i = 0; i < grayImage.Width; ++i)
-                for (int j = 0; j < grayImage.Height; ++j)
-                {
-                    Color c = grayImage.GetPixel(i, j);
-                    int gr = (c.R + c.G + c.B) / 3;
-                    grayImage.SetPixel(i, j, Color.FromArgb(gr, gr, gr));
-                }
-
-            double[,] H1 = new double[3, 3] { 
-                { -1.0, 0, 1.0 },
-                { -1.0, 0, 1.0 },
-                { -1.0, 0, 1.0 } };
-
-            double[,] H2 = new double[3, 3] { 
-                { 1.0, 1.0, 1.0 },
-                { 0, 0, 0 },
-                { -1.0, -1.0, -1.0 } };
-
-            double[,] H3 = new double[3, 3] { 
-                { 0, 1.0, 1.0 },
-                { -1.0, 0, 1.0 },
-                { -1.0, -1.0, 0 } };
-
-            double[,] H4 = new double[3, 3] { 
-                { 1.0, 1.0, 0 },
-                { 1.0, 0, -1.0 },
-                { 0, -1.0, -1.0 } };
-
-            for (int i = 1; i < newImage.Width - 1; ++i)
-                for (int j = 1; j < newImage.Height - 1; ++j)
-                {
-                    Color col1 = Convolution(grayImage, i, j, H1);
-                    Color col2 = Convolution(grayImage, i, j, H2);
-                    Color col3 = Convolution(grayImage, i, j, H3);
-                    Color col4 = Convolution(grayImage, i, j, H4);
-                    int r = (int)Math.Max(col1.R, Math.Max(col2.R, Math.Max(col3.R, col4.R)));
-                    int g = (int)Math.Max(col1.G, Math.Max(col2.G, Math.Max(col3.G, col4.G)));
-                    int b = (int)Math.Max(col1.B, Math.Max(col2.B, Math.Max(col3.B, col4.B)));
-                    newImage.SetPixel(i, j, Color.FromArgb(r, g, b));
-                }
-            for (int j = 0; j < newImage.Height; ++j)
-                newImage.SetPixel(0, j, newImage.GetPixel(1, j));
-            for (int i = 0; i < newImage.Width; ++i)
-                newImage.SetPixel(i, 0, newImage.GetPixel(i, 1));
-
-            grayImage.Unlock();
-            newImage.Unlock();
-            return newImage;
-        }
-
-        private void buttonKirch_Click(object sender, EventArgs e)
-        {
-            workImage = new FastImage((Bitmap)image.Clone());
-            workImage.Lock();
-
-            FastImage newImage = Kirsch(workImage);
-
-            workImage.Unlock();
-
-            workImage = newImage;
-            workImage.Lock();
-
-            panelDestination.BackgroundImage = null;
-            panelDestination.BackgroundImage = workImage.GetBitMap();
-
-            workImage.Unlock();
-        }
-
         private FastImage Laplace(FastImage image , double[,] H)
         {
 
             FastImage grayImage = new FastImage((Bitmap)this.image.Clone());
-            grayImage.Lock();
+            contourImage.Lock();//grayImage
             FastImage newImage = new FastImage((Bitmap)this.image.Clone());
             newImage.Lock();
 
-            for (int i = 0; i < grayImage.Width; ++i)
+            /*for (int i = 0; i < grayImage.Width; ++i)
                 for (int j = 0; j < grayImage.Height; ++j)
                 {
                     Color c = grayImage.GetPixel(i, j);
                     int gr = (c.R + c.G + c.B) / 3;
                     grayImage.SetPixel(i, j, Color.FromArgb(gr, gr, gr));
-                }
+                }*/
 
             
 
             for (int i = 1; i < newImage.Width - 1; ++i)
                 for (int j = 1; j < newImage.Height - 1; ++j)
                 {
-                    Color col = Convolution(grayImage, i, j, H);
+                    Color col = Convolution(workImage, i, j, H); //grayImage
                     newImage.SetPixel(i, j, Color.FromArgb(col.R, col.G, col.B));
                 }
             for (int j = 0; j < newImage.Height; ++j)
@@ -1168,14 +1096,14 @@ namespace ComputerVision
             for (int i = 0; i < newImage.Width; ++i)
                 newImage.SetPixel(i, 0, newImage.GetPixel(i, 1));
 
-            grayImage.Unlock();
+            contourImage.Unlock();//grayImage
             newImage.Unlock();
             return newImage;
         }
 
         private void buttonLaplace_Click(object sender, EventArgs e)
         {
-            workImage = new FastImage((Bitmap)image.Clone());
+           // workImage = new FastImage((Bitmap)image.Clone());
             workImage.Lock();
 
             double[,] H = new double[3, 3]{
@@ -1199,7 +1127,7 @@ namespace ComputerVision
 
         private void buttonLaplace2_Click(object sender, EventArgs e)
         {
-            workImage = new FastImage((Bitmap)image.Clone());
+            //workImage = new FastImage((Bitmap)image.Clone());
             workImage.Lock();
 
             double[,] H = new double[3, 3]{
@@ -1221,19 +1149,25 @@ namespace ComputerVision
             workImage.Unlock();
         }
 
-        private FastImage Roberts(FastImage image)
+        private void Roberts()
         {
             FastImage grayImage = new FastImage((Bitmap)this.image.Clone());
+            
+            //FastImage workImage = new FastImage((Bitmap)this.image.Clone());
+            //workImage.Lock();
             grayImage.Lock();
-            FastImage newImage = new FastImage((Bitmap)this.image.Clone());
-            newImage.Lock();
+            //grayImage = workImage;
+            //workImage = workImage;
 
+           // 
+            
+            
             for (int i = 0; i < grayImage.Width; ++i)
                 for (int j = 0; j < grayImage.Height; ++j)
                 {
                     Color c = grayImage.GetPixel(i, j);
                     int gr = (c.R + c.G + c.B) / 3;
-                    grayImage.SetPixel(i, j, Color.FromArgb(gr, gr, gr));
+                    grayImage.SetPixel(i, j, workImage.GetPixel(i,j));
                 }
 
             double[,] H1 = new double[2,2] { 
@@ -1244,38 +1178,38 @@ namespace ComputerVision
                 { 0, 1 },
                 { -1, 0} };
 
-            for (int i = 0; i < newImage.Width - 1; ++i)
-                for (int j = 0; j < newImage.Height - 1; ++j)
+            for (int i = 0; i < workImage.Width - 1; ++i)
+                for (int j = 0; j < workImage.Height - 1; ++j)
                 {
                     Color col1 = Convolution1(grayImage, i, j, H1);
                     Color col2 = Convolution1(grayImage, i, j, H2);
                     int R = (int)Math.Sqrt(col1.R * col1.R + col2.R * col2.R);
                     int G = (int)Math.Sqrt(col1.G * col1.G + col2.G * col2.G);
                     int B = (int)Math.Sqrt(col1.B * col1.B + col2.B * col2.B);
-                    newImage.SetPixel(i, j, Color.FromArgb(
+                    workImage.SetPixel(i, j, Color.FromArgb(
                         Clamp(0, 255, 7 * R), Clamp(0, 255, 7 * G), Clamp(0, 255, 7 *B)));
                 }
-            for (int j = 0; j < newImage.Height; ++j)
-                newImage.SetPixel(0, j, newImage.GetPixel(1, j));
-            for (int i = 0; i < newImage.Width; ++i)
-                newImage.SetPixel(i, 0, newImage.GetPixel(i, 1));
+            for (int j = 0; j < workImage.Height; ++j)
+                workImage.SetPixel(0, j, workImage.GetPixel(1, j));
+            for (int i = 0; i < workImage.Width; ++i)
+                workImage.SetPixel(i, 0, workImage.GetPixel(i, 1));
 
             grayImage.Unlock();
-            newImage.Unlock();
-            return newImage;
+            //workImage.Unlock();
+            //workImage = workImage;
+           
         }
 
         private void buttonRoberts_Click(object sender, EventArgs e)
         {
-            workImage = new FastImage((Bitmap)image.Clone());
+            //workImage = new FastImage((Bitmap)image.Clone());
+            
+            Roberts();
+            //workImage.Lock();
+
             workImage.Lock();
-
-            FastImage newImage = Roberts(workImage);
-
-            workImage.Unlock();
-
-            workImage = newImage;
-            workImage.Lock();
+            
+            
 
             panelDestination.BackgroundImage = null;
             panelDestination.BackgroundImage = workImage.GetBitMap();
@@ -1283,19 +1217,20 @@ namespace ComputerVision
             workImage.Unlock();
         }
 
-        private FastImage Prewit(FastImage image)
+        private void Prewitt()
         {
-            FastImage grayImage = new FastImage((Bitmap)this.image.Clone());
+            FastImage grayImage = new FastImage((Bitmap)image.Clone());//= new FastImage(workImage.GetBitMap());
+            //grayImage = workImage;
             grayImage.Lock();
-            FastImage newImage = new FastImage((Bitmap)this.image.Clone());
-            newImage.Lock();
+            //FastImage workImage = new FastImage((Bitmap)this.image.Clone());
+            //workImage.Lock();
 
             for (int i = 0; i < grayImage.Width; ++i)
                 for (int j = 0; j < grayImage.Height; ++j)
                 {
                     Color c = grayImage.GetPixel(i, j);
                     int gr = (c.R + c.G + c.B) / 3;
-                    grayImage.SetPixel(i, j, Color.FromArgb(gr, gr, gr));
+                    grayImage.SetPixel(i, j, workImage.GetPixel(i,j));
                 }
 
             double[,] H2 = new double[3, 3] { 
@@ -1308,38 +1243,35 @@ namespace ComputerVision
                 { 0, 0, 0 },
                 { 1.0, 1.0, 1.0 } };
 
-            for (int i = 1; i < newImage.Width - 1; ++i)
-                for (int j = 1; j < newImage.Height - 1; ++j)
+            for (int i = 1; i < workImage.Width - 1; ++i)
+                for (int j = 1; j < workImage.Height - 1; ++j)
                 {
                     Color col1 = Convolution(grayImage, i, j, H1);
                     Color col2 = Convolution(grayImage, i, j, H2);
                     int R = (int)Math.Sqrt(col1.R * col1.R + col2.R * col2.R);
                     int G = (int)Math.Sqrt(col1.G * col1.G + col2.G * col2.G);
                     int B = (int)Math.Sqrt(col1.B * col1.B + col2.B * col2.B);
-                    newImage.SetPixel(i, j, Color.FromArgb(
+                    workImage.SetPixel(i, j, Color.FromArgb(
                         Clamp(0, 255, R), Clamp(0, 255, G), Clamp(0, 255, B)));
                 }
-            for (int j = 0; j < newImage.Height; ++j)
-                newImage.SetPixel(0, j, newImage.GetPixel(1, j));
-            for (int i = 0; i < newImage.Width; ++i)
-                newImage.SetPixel(i, 0, newImage.GetPixel(i, 1));
+            for (int j = 0; j < workImage.Height; ++j)
+                workImage.SetPixel(0, j, workImage.GetPixel(1, j));
+            for (int i = 0; i < workImage.Width; ++i)
+                workImage.SetPixel(i, 0, workImage.GetPixel(i, 1));
 
             grayImage.Unlock();
-            newImage.Unlock();
-            return newImage;
+            //workImage.Unlock();
+            //return workImage;
         }
 
         private void buttonPrewit_Click(object sender, EventArgs e)
         {
-            workImage = new FastImage((Bitmap)image.Clone());
+            //workImage = new FastImage((Bitmap)image.Clone());
             workImage.Lock();
 
-            FastImage newImage = Prewit(workImage);
+            Prewitt();
 
-            workImage.Unlock();
-
-            workImage = newImage;
-            workImage.Lock();
+  
 
             panelDestination.BackgroundImage = null;
             panelDestination.BackgroundImage = workImage.GetBitMap();
@@ -1347,19 +1279,19 @@ namespace ComputerVision
             workImage.Unlock();
         }
 
-        private FastImage Sobel(FastImage image)
+        private void Sobel()
         {
             FastImage grayImage = new FastImage((Bitmap)this.image.Clone());
             grayImage.Lock();
-            FastImage newImage = new FastImage((Bitmap)this.image.Clone());
-            newImage.Lock();
+            
+            
 
             for (int i = 0; i < grayImage.Width; ++i)
                 for (int j = 0; j < grayImage.Height; ++j)
                 {
                     Color c = grayImage.GetPixel(i, j);
                     int gr = (c.R + c.G + c.B) / 3;
-                    grayImage.SetPixel(i, j, Color.FromArgb(gr, gr, gr));
+                    grayImage.SetPixel(i, j, workImage.GetPixel(i,j));
                 }
 
             double[,] H2 = new double[3, 3] { 
@@ -1372,38 +1304,33 @@ namespace ComputerVision
                 { 0, 0, 0 },
                 { 1.0, 2.0, 1.0 } };
 
-            for (int i = 1; i < newImage.Width - 1; ++i)
-                for (int j = 1; j < newImage.Height - 1; ++j)
+            for (int i = 1; i < workImage.Width - 1; ++i)
+                for (int j = 1; j < workImage.Height - 1; ++j)
                 {
                     Color col1 = Convolution(grayImage, i, j, H1);
                     Color col2 = Convolution(grayImage, i, j, H2);
                     int R = (int)Math.Sqrt(col1.R * col1.R + col2.R * col2.R);
                     int G = (int)Math.Sqrt(col1.G * col1.G + col2.G * col2.G);
                     int B = (int)Math.Sqrt(col1.B * col1.B + col2.B * col2.B);
-                    newImage.SetPixel(i, j, Color.FromArgb(
+                    workImage.SetPixel(i, j, Color.FromArgb(
                         Clamp(0, 255, R), Clamp(0, 255, G), Clamp(0, 255, B)));
                 }
-            for (int j = 0; j < newImage.Height; ++j)
-                newImage.SetPixel(0, j, newImage.GetPixel(1, j));
-            for (int i = 0; i < newImage.Width; ++i)
-                newImage.SetPixel(i, 0, newImage.GetPixel(i, 1));
+            for (int j = 0; j < workImage.Height; ++j)
+                workImage.SetPixel(0, j, workImage.GetPixel(1, j));
+            for (int i = 0; i < workImage.Width; ++i)
+                workImage.SetPixel(i, 0, workImage.GetPixel(i, 1));
 
             grayImage.Unlock();
-            newImage.Unlock();
-            return newImage;
+            
+         
         }
 
         private void buttonSobel_Click(object sender, EventArgs e)
         {
-            workImage = new FastImage((Bitmap)image.Clone());
+            //workImage = new FastImage((Bitmap)image.Clone());
             workImage.Lock();
 
-            FastImage newImage = Sobel(workImage);
-
-            workImage.Unlock();
-
-            workImage = newImage;
-            workImage.Lock();
+            Sobel();
 
             panelDestination.BackgroundImage = null;
             panelDestination.BackgroundImage = workImage.GetBitMap();
@@ -1489,6 +1416,9 @@ namespace ComputerVision
 
                     double Rjos = Rsus + col5.R * col5.R + col6.R * col6.R + col7.R * col7.R + col8.R * col8.R + col9.R * col9.R;
                     double R = Math.Sqrt(Rsus / Rjos) * 255;
+                    R = R > 255 ? 255 : R;
+                    R = R < 0 ? 0 : R;
+
                     newImage.SetPixel(i, j, Color.FromArgb((int)R,(int)R,(int)R));
                 }
             for (int j = 0; j < newImage.Height; ++j)
@@ -2018,12 +1948,12 @@ namespace ComputerVision
                 }*/
 
                     if (color.G >= 60)
-                        if (hue >= 244 && hue <= 350 && bri < 0.66 && sat >=0.4)
-                            workImage.SetPixel(i, j, Color.White);
+                        if (hue >= 200 && hue <= 355 && bri < 0.8 && sat >= 0.25)    //if (hue >= 244 && hue <= 350 && bri < 0.66 && sat >=0.4)
+                            workImage.SetPixel(i, j, Color.FromArgb(255,255,255));
                         else
-                            workImage.SetPixel(i, j, Color.Black);
-                    else  
-                         workImage.SetPixel(i, j, Color.White);
+                            workImage.SetPixel(i, j, Color.FromArgb(0, 0, 0));
+                    else
+                        workImage.SetPixel(i, j, Color.FromArgb(255, 255, 255));
                 }
             }
 
@@ -2032,7 +1962,188 @@ namespace ComputerVision
             workImage.Unlock();
         }
 
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+        
+        }
+
+        private void btnContour_Click(object sender, EventArgs e)
+        {
+            int x, y, last, next;
+            FastImage contourImage = new FastImage((Bitmap)image.Clone());
+            contourImage.Lock();
+            workImage.Lock();
+
+
+            //Contour();
+            //btnHue_Click(null,null);
+            //Contour();
+
+
+
+
+
+
+
+            for (int i = 0; i < workImage.Width; i++)
+            {
+                for (int j = 0; j < workImage.Height; j++)
+                {
+                    contourImage.SetPixel(i,j,Color.FromArgb(0,0,0));
+                }
+            }
+            for (int i = 0; i < workImage.Width; i++)
+            {
+                for (int j = 0; j < workImage.Height; j++)
+                { //&& (j == 0 || (workImage.GetPixel(i,j-1) == Color.Black))
+                    //contourImage.SetPixel(i, j, workImage.GetPixel(i, j));
+                    if ((workImage.GetPixel(i, j) == Color.FromArgb(255, 255, 255)) && (j == 0 || (workImage.GetPixel(i,j-1) == Color.FromArgb(0,0,0))))
+                    {
+                        x = i;
+                        y = j;
+                        workImage.SetPixel(i,j,Color.Red);
+                        contourImage.SetPixel(i, j, Color.FromArgb(255, 255, 255));
+                        last = 0;
+                        next = GetNext(x, y, last);
+
+                        while (workImage.GetPixel(x + contourX[next], y + contourY[next]) == Color.FromArgb(255, 255, 255)) {
+                            x += contourX[next];
+                            y += contourY[next];
+                            workImage.SetPixel(x, y, Color.Red);
+                            contourImage.SetPixel(x, y, Color.FromArgb(255, 255, 255));
+                            last = (next + 5) % 8; //last = (next + 4) % 8;
+                            next = GetNext(x, y, last);
+                            
+                        }
+
+                    }
+
+                }
+             }
+
+            /*contourImage.Unlock();
+            workImage.Unlock();
+
+            btnHue_Click(null, null);
+
+            contourImage.Lock();
+            workImage.Lock();
+            
+            for (int i = 0; i < workImage.Width; i++)
+            {
+                for (int j = 0; j < workImage.Height; j++)
+                { //&& (j == 0 || (workImage.GetPixel(i,j-1) == Color.Black))
+                    //contourImage.SetPixel(i, j, workImage.GetPixel(i, j));
+                    if ((workImage.GetPixel(i, j) == Color.FromArgb(255, 255, 255)) && (j == 0 || (workImage.GetPixel(i, j - 1) == Color.FromArgb(0, 0, 0))))
+                    {
+                        x = i;
+                        y = j;
+                        workImage.SetPixel(i, j, Color.Red);
+                        contourImage.SetPixel(i, j, Color.FromArgb(255, 255, 255));
+                        last = 0;
+                        next = GetNext(x, y, last);
+
+                        while (workImage.GetPixel(x + contourX[next], y + contourY[next]) == Color.FromArgb(255, 255, 255))
+                        {
+                            x += contourX[next];
+                            y += contourY[next];
+                            workImage.SetPixel(x, y, Color.Red);
+                            contourImage.SetPixel(x, y, Color.FromArgb(255, 255, 255));
+                            last = (next + 7) % 8; //last = (next + 4) % 8;
+                            next = GetNext(x, y, last);
+
+                        }
+
+                    }
+
+                }
+            }
+
+            */
+
+
+
+            //contourImage.Lock();
+            //workImage.Lock();
+            panelDestination.BackgroundImage = null;
+            panelDestination.BackgroundImage = workImage.GetBitMap();
+            panelContour.BackgroundImage = null;
+            panelContour.BackgroundImage = contourImage.GetBitMap();
+            contourImage.Unlock();        
+            workImage.Unlock();
+        }
+        private void Contour(){ 
+        int x, y, last, next;
+        FastImage tempImage = new FastImage((Bitmap)image.Clone());
+        tempImage = workImage;
+            contourImage.Lock();
+            tempImage.Lock();
+            for (int i = 0; i < tempImage.Width; i++)
+            {
+                for (int j = 0; j < tempImage.Height; j++)
+                { contourImage.SetPixel(i, j, Color.FromArgb(0, 0, 0));
+                }
+            }
+
+           
+            for (int i = 0; i < tempImage.Width; i++)
+            {
+                for (int j = 0; j < tempImage.Height; j++)
+                { //&& (j == 0 || (workImage.GetPixel(i,j-1) == Color.Black))
+                    //contourImage.SetPixel(i, j, workImage.GetPixel(i, j));
+                    if ((tempImage.GetPixel(i, j) == Color.FromArgb(255, 255, 255)) && (j == 0 || (tempImage.GetPixel(i, j - 1) == Color.FromArgb(0, 0, 0))))
+                    {
+                        x = i;
+                        y = j;
+                        tempImage.SetPixel(i, j, Color.FromArgb(0,0,0));
+                        contourImage.SetPixel(i, j, Color.FromArgb(255, 255, 255));
+                        last = 0;
+                        next = GetNext(x, y, last);
+
+                        while (tempImage.GetPixel(x + contourX[next], y + contourY[next]) == Color.FromArgb(255, 255, 255))
+                        {
+                            x += contourX[next];
+                            y += contourY[next];
+                            tempImage.SetPixel(i, j, Color.FromArgb(255, 0, 0));
+                            contourImage.SetPixel(x, y, Color.FromArgb(255, 255, 255));
+                            last = (next + 4) % 8; //last = (next + 4) % 8;
+                            next = GetNext(x, y, last);
+                            
+                        }
+
+                    }
+
+                }
+             }
+            //panelDestination.BackgroundImage = null;
+            //panelDestination.BackgroundImage = workImage.GetBitMap();
+            //panelContour.BackgroundImage = null;
+            //panelContour.BackgroundImage = contour.GetBitMap();
+            contourImage.Unlock();
+            tempImage.Unlock();
+        }
+
+        private int GetNext(int x, int y, int last)
+        {
+               int nx, ny, next;
+
+               next = (last + 2) % 8;
+               nx = x + contourX[next];
+               ny = y + contourY[next];
+               while ((next != last) &&
+	              ((nx < 0) || (nx >= workImage.Width) ||
+	               (ny < 0) || (ny >= workImage.Height) ||
+	               (workImage.GetPixel(nx, ny) == Color.FromArgb(0,0,0))))
+               {
+                  next = (next + 1) % 8;
+                  nx = x + contourX[next];
+                  ny = y + contourY[next];
+               }
+               return (next);
+        }
+
+        }
+
 
 
     }
-}

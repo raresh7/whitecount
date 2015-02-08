@@ -72,13 +72,14 @@ namespace ComputerVision
             this.buttonRoberts = new System.Windows.Forms.Button();
             this.buttonLaplace2 = new System.Windows.Forms.Button();
             this.buttonLaplace = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
             this.panel5 = new System.Windows.Forms.Panel();
             this.button10 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.panel6 = new System.Windows.Forms.Panel();
             this.btnHue = new System.Windows.Forms.Button();
+            this.panelContour = new System.Windows.Forms.Panel();
+            this.btnContour = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
@@ -514,7 +515,6 @@ namespace ComputerVision
             this.panel4.Controls.Add(this.buttonRoberts);
             this.panel4.Controls.Add(this.buttonLaplace2);
             this.panel4.Controls.Add(this.buttonLaplace);
-            this.panel4.Controls.Add(this.button8);
             this.panel4.Location = new System.Drawing.Point(12, 479);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(349, 127);
@@ -590,16 +590,6 @@ namespace ComputerVision
             this.buttonLaplace.UseVisualStyleBackColor = true;
             this.buttonLaplace.Click += new System.EventHandler(this.buttonLaplace_Click);
             // 
-            // button8
-            // 
-            this.button8.Location = new System.Drawing.Point(28, 3);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(75, 23);
-            this.button8.TabIndex = 0;
-            this.button8.Text = "Kirsch";
-            this.button8.UseVisualStyleBackColor = true;
-            this.button8.Click += new System.EventHandler(this.buttonKirch_Click);
-            // 
             // panel5
             // 
             this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -662,11 +652,33 @@ namespace ComputerVision
             this.btnHue.UseVisualStyleBackColor = true;
             this.btnHue.Click += new System.EventHandler(this.btnHue_Click);
             // 
+            // panelContour
+            // 
+            this.panelContour.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panelContour.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panelContour.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.panelContour.Location = new System.Drawing.Point(848, 12);
+            this.panelContour.Name = "panelContour";
+            this.panelContour.Size = new System.Drawing.Size(320, 240);
+            this.panelContour.TabIndex = 9;
+            // 
+            // btnContour
+            // 
+            this.btnContour.Location = new System.Drawing.Point(767, 145);
+            this.btnContour.Name = "btnContour";
+            this.btnContour.Size = new System.Drawing.Size(75, 23);
+            this.btnContour.TabIndex = 10;
+            this.btnContour.Text = "Contour following";
+            this.btnContour.UseVisualStyleBackColor = true;
+            this.btnContour.Click += new System.EventHandler(this.btnContour_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(754, 618);
+            this.ClientSize = new System.Drawing.Size(1362, 618);
+            this.Controls.Add(this.btnContour);
+            this.Controls.Add(this.panelContour);
             this.Controls.Add(this.btnHue);
             this.Controls.Add(this.panel5);
             this.Controls.Add(this.panel4);
@@ -678,6 +690,7 @@ namespace ComputerVision
             this.Controls.Add(this.panelSource);
             this.Name = "MainForm";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
@@ -734,7 +747,6 @@ namespace ComputerVision
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button buttonFTS3;
         private System.Windows.Forms.Button buttonFTS2;
         private System.Windows.Forms.Button buttonLaplace2;
@@ -750,6 +762,8 @@ namespace ComputerVision
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button10;
         private System.Windows.Forms.Button btnHue;
+        private System.Windows.Forms.Panel panelContour;
+        private System.Windows.Forms.Button btnContour;
     }
 }
 
