@@ -80,6 +80,9 @@ namespace ComputerVision
             this.btnHue = new System.Windows.Forms.Button();
             this.panelContour = new System.Windows.Forms.Panel();
             this.btnContour = new System.Windows.Forms.Button();
+            this.btnCircle = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
@@ -672,11 +675,43 @@ namespace ComputerVision
             this.btnContour.UseVisualStyleBackColor = true;
             this.btnContour.Click += new System.EventHandler(this.btnContour_Click);
             // 
+            // btnCircle
+            // 
+            this.btnCircle.Location = new System.Drawing.Point(767, 175);
+            this.btnCircle.Name = "btnCircle";
+            this.btnCircle.Size = new System.Drawing.Size(75, 23);
+            this.btnCircle.TabIndex = 11;
+            this.btnCircle.Text = "Detect Circle";
+            this.btnCircle.UseVisualStyleBackColor = true;
+            this.btnCircle.Click += new System.EventHandler(this.btnCircle_Click);
+            // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(767, 205);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(75, 23);
+            this.button8.TabIndex = 12;
+            this.button8.Text = "button8";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.btnCircle_Click);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(797, 304);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(35, 13);
+            this.label9.TabIndex = 13;
+            this.label9.Text = "label9";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1362, 618);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.button8);
+            this.Controls.Add(this.btnCircle);
             this.Controls.Add(this.btnContour);
             this.Controls.Add(this.panelContour);
             this.Controls.Add(this.btnHue);
@@ -707,6 +742,7 @@ namespace ComputerVision
             this.panel4.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -764,6 +800,9 @@ namespace ComputerVision
         private System.Windows.Forms.Button btnHue;
         private System.Windows.Forms.Panel panelContour;
         private System.Windows.Forms.Button btnContour;
+        private System.Windows.Forms.Button btnCircle;
+        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Label label9;
     }
 }
 
