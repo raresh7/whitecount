@@ -21,8 +21,11 @@ namespace ComputerVision
         private int TranslateX = 0;
         private int TranslateY = 1;
         Color[,] pixels;
-        private int[] contourY = { 0, 1, 1, 1, 0, -1, -1, -1 }, contourX = { -1, -1, 0, 1, 1, 1, 0, -1 }; //posibil sa fie inversate
+        private int[] contourX = { 0, 1, 1, 1, 0, -1, -1, -1 }, contourY = { -1, -1, 0, 1, 1, 1, 0, -1 }; //posibil sa fie inversate
         private int[,] hough;
+        private int maxhough;
+        private int[] houghradius;
+        private int houghmtxcount;
 
 
         public MainForm()
@@ -2164,7 +2167,7 @@ namespace ComputerVision
                 }
             }
 
-            for (r = 34; r < 35; r++)
+            for (r = Convert.ToInt16(minRadiustxt.Text); r <= Convert.ToInt16(maxRadiustxt.Text); r += Convert.ToInt16(radiusSteptxt.Text))
             {     //radius here
                 clearHoughMatrix();
                 for (int i = 0; i < workImage.Width; i++)
@@ -2172,7 +2175,7 @@ namespace ComputerVision
                     for (int j = 0; j < workImage.Height; j++)
                     { //&& (j == 0 || (workImage.GetPixel(i,j-1) == Color.Black))
                         //contourImage.SetPixel(i, j, workImage.GetPixel(i, j));
-                        if ((workImage.GetPixel(i, j) == Color.FromArgb(255, 255, 255)) && (j == 0 || (workImage.GetPixel(i, j - 1) == Color.FromArgb(0, 0, 0))))
+                        /*if ((workImage.GetPixel(i, j) == Color.FromArgb(255, 255, 255)) && (j == 0 || (workImage.GetPixel(i, j - 1) == Color.FromArgb(0, 0, 0))))
                         {
                             x = i;
                             y = j;
@@ -2194,8 +2197,12 @@ namespace ComputerVision
                                 next = GetNext(x, y, last);
 
                             }
-
-                        }
+                        
+                    
+                    }*/
+                    
+                        if(workImage.GetPixel(i,j) == Color.FromArgb(255,255,255))
+                            MarkCircleEdge(i, j, r);
 
                     }
                 }
@@ -2211,6 +2218,7 @@ namespace ComputerVision
             contourImage.Unlock();
             workImage.Unlock();
             Drawhough();
+            
         }
 
         private void clearHoughMatrix()
@@ -2237,17 +2245,18 @@ namespace ComputerVision
             p.x = maxx;
             p.y = maxy;
             label9.Text = max.ToString() + "  " + maxx.ToString() + "  " + maxy.ToString();
+            maxhough = max;
             return p;
         }
 
-        private void MarkCircleEdge(int x, int y, float radius)
+        private void MarkCircleEdge(int x, int y, double radius)
         {
             int lastx = -1, lasty = -1, cx, cy;
-            for (double i = 0; i < 360; i += 0.25)
+            for (double i = 0; i < 360; i ++)
             {
-                cx = x + (int)(radius * Math.Sin(i));
-                cy = y + (int)(radius * Math.Cos(i));
-                if ((cx != lastx || cy != lasty) && (cy >= 0 && cx >= 0 && cx < workImage.Width && cy < workImage.Height))
+                cx = x + (int)Math.Round(radius * Math.Cos(i * Math.PI/180));
+                cy = y + (int)Math.Round(radius * Math.Sin(i * Math.PI / 180));
+                if ((cx != lastx || cy != lasty) && (cy >= 0 && cx >= 0 && cx < workImage.Width && cy < workImage.Height)) // && cx%10 == 0 && cy%10 == 0
                 {
                     lastx = cx;
                     lasty = cy;
@@ -2261,19 +2270,20 @@ namespace ComputerVision
         {
             int lastx = -1, lasty = -1, cx, cy;
             contourImage.Lock();
-            for (double i = 0; i < 360; i += 0.25)
+            for (double i = 0; i < 360; i += 1)
             {
-                cx = x + (int)(radius * Math.Sin(i));
-                cy = y + (int)(radius * Math.Cos(i));
+                cx = x + (int)Math.Round(radius * Math.Cos(i * (Math.PI / 180.0)));
+                cy = y + (int)Math.Round(radius * Math.Sin(i * (Math.PI / 180.0)));
+
                 if ((cx != lastx || cy != lasty) && (cy >= 0 && cx >= 0 && cx < workImage.Width && cy < workImage.Height))
                 {
                     lastx = cx;
                     lasty = cy;
-                    contourImage.SetPixel(cx-1, cy, Color.FromArgb(255, 255, 255));
-                    contourImage.SetPixel(cx+1, cy, Color.FromArgb(255, 255, 255));
-                    contourImage.SetPixel(cx, cy, Color.FromArgb(255, 255, 255));
-                    contourImage.SetPixel(cx, cy-1, Color.FromArgb(255, 255, 255));
-                    contourImage.SetPixel(cx, cy+1, Color.FromArgb(255, 255, 255));
+                    //contourImage.SetPixel(cx-1, cy, Color.FromArgb(255, 255, 255));
+                    //contourImage.SetPixel(cx+1, cy, Color.FromArgb(255, 255, 255));
+                    contourImage.SetPixel(cx, cy, Color.Black);//FromArgb(255, 255, 255));
+                    //contourImage.SetPixel(cx, cy-1, Color.FromArgb(255, 255, 255));
+                    //contourImage.SetPixel(cx, cy+1, Color.FromArgb(255, 255, 255));
                 }
             }
 
@@ -2289,12 +2299,29 @@ namespace ComputerVision
             contourImage.Lock();
             for (int i = 0; i < workImage.Width; i ++)
                 for(int j = 0; j < workImage.Height;j++ )
-            
-                    contourImage.SetPixel(i, j, Color.FromArgb(hough[i,j]*255/945, hough[i,j]*255/945, hough[i,j]*255/945));
+
+                    //contourImage.SetPixel(i, j, Color.FromArgb(255,255, 255));
+                    if(hough[i,j]>0)
+                        contourImage.SetPixel(i, j, Color.FromArgb(hough[i, j] * 255 / maxhough, hough[i, j] * 255 / maxhough, hough[i, j] * 255 / maxhough));
+                        
 
             contourImage.Unlock();
             panelContour.BackgroundImage = null;
             panelContour.BackgroundImage = contourImage.GetBitMap();
+
+        }
+
+        private void initializeHoughRadVect() {
+            houghmtxcount = (((Convert.ToInt16(maxRadiustxt.Text) - Convert.ToInt16(minRadiustxt.Text)) +1) / Convert.ToInt16(radiusSteptxt.Text));
+            houghradius = new int[houghmtxcount];
+            for (int i = 0; i < houghmtxcount; i ++ ) {
+                    houghradius[i] = Convert.ToInt16(minRadiustxt.Text) + i*Convert.ToInt16(radiusSteptxt.Text);
+
+               }
+        }
+
+        private void label10_Click(object sender, EventArgs e)
+        {
 
         }
 

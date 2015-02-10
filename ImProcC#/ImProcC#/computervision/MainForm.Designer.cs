@@ -83,6 +83,12 @@ namespace ComputerVision
             this.btnCircle = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
+            this.minRadiustxt = new System.Windows.Forms.TextBox();
+            this.maxRadiustxt = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.radiusSteptxt = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
@@ -486,7 +492,7 @@ namespace ComputerVision
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(120, 20);
             this.textBox1.TabIndex = 2;
-            this.textBox1.Text = "0,7";
+            this.textBox1.Text = "0,3";
             // 
             // button7
             // 
@@ -698,17 +704,75 @@ namespace ComputerVision
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(797, 304);
+            this.label9.Location = new System.Drawing.Point(764, 360);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(35, 13);
             this.label9.TabIndex = 13;
             this.label9.Text = "label9";
+            // 
+            // minRadiustxt
+            // 
+            this.minRadiustxt.Location = new System.Drawing.Point(838, 271);
+            this.minRadiustxt.Name = "minRadiustxt";
+            this.minRadiustxt.Size = new System.Drawing.Size(110, 20);
+            this.minRadiustxt.TabIndex = 14;
+            this.minRadiustxt.Text = "30";
+            // 
+            // maxRadiustxt
+            // 
+            this.maxRadiustxt.Location = new System.Drawing.Point(1097, 271);
+            this.maxRadiustxt.Name = "maxRadiustxt";
+            this.maxRadiustxt.Size = new System.Drawing.Size(122, 20);
+            this.maxRadiustxt.TabIndex = 15;
+            this.maxRadiustxt.Text = "31";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(748, 274);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(84, 13);
+            this.label10.TabIndex = 16;
+            this.label10.Text = "Minimum Radius";
+            this.label10.Click += new System.EventHandler(this.label10_Click);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(1005, 274);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(87, 13);
+            this.label11.TabIndex = 17;
+            this.label11.Text = "Maximum Radius";
+            // 
+            // radiusSteptxt
+            // 
+            this.radiusSteptxt.Location = new System.Drawing.Point(940, 311);
+            this.radiusSteptxt.Name = "radiusSteptxt";
+            this.radiusSteptxt.Size = new System.Drawing.Size(100, 20);
+            this.radiusSteptxt.TabIndex = 18;
+            this.radiusSteptxt.Text = "1";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(871, 315);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(63, 13);
+            this.label12.TabIndex = 19;
+            this.label12.Text = "Radius step";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1362, 618);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.radiusSteptxt);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.maxRadiustxt);
+            this.Controls.Add(this.minRadiustxt);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.button8);
             this.Controls.Add(this.btnCircle);
@@ -803,6 +867,12 @@ namespace ComputerVision
         private System.Windows.Forms.Button btnCircle;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox minRadiustxt;
+        private System.Windows.Forms.TextBox maxRadiustxt;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox radiusSteptxt;
+        private System.Windows.Forms.Label label12;
     }
 }
 
