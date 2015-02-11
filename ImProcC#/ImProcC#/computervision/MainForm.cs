@@ -9,13 +9,37 @@ using System.Drawing.Imaging;
 
 namespace ComputerVision
 {
+
+
     public partial class MainForm : Form
     {
+
+        struct Circle
+        {
+            Point origin;
+            int radius;
+        }
+
+         struct Region
+        {
+            public int regNumber;
+            public int area;
+
+            public Region(int regnum, int ar)
+            {
+                regNumber = regnum;
+                area = ar;
+            }
+        }
+
+
         private string sSourceFileName = "";
         private FastImage workImage;
         private FastImage contourImage;
         private FastImage workImage1;
         private FastImage workImageSecondary;
+        private FastImage binaryImage;
+        private FastImage regionsImage;
         private Bitmap secondaryImage;
         private Bitmap image = null;
         private int TranslateX = 0;
@@ -23,9 +47,13 @@ namespace ComputerVision
         Color[,] pixels;
         private int[] contourX = { 0, 1, 1, 1, 0, -1, -1, -1 }, contourY = { -1, -1, 0, 1, 1, 1, 0, -1 }; //posibil sa fie inversate
         private int[,] hough;
+        private int[,] regionsMtx;
         private int maxhough;
         private int[] houghradius;
         private int houghmtxcount;
+        private int regionsCount = 0;
+        private List<Circle> circles = new List<Circle>();
+        private List<Region> cellRegions = new List<Region>();
 
 
         public MainForm()
@@ -40,10 +68,13 @@ namespace ComputerVision
             panelSource.BackgroundImage = new Bitmap(sSourceFileName);
             image = new Bitmap(sSourceFileName);
             workImage = new FastImage(image);
+            binaryImage = new FastImage(image);
+            regionsImage = new FastImage(image);
             workImage1 = new FastImage(image);
             contourImage = new FastImage((Bitmap)image.Clone());
             //contourImage = workImage;
             hough = new int[workImage1.Width, workImage1.Height];
+            regionsMtx = new int[workImage1.Width, workImage1.Height];
             pixels = new Color[workImage1.Width, workImage1.Height];
         }
 
@@ -1961,10 +1992,11 @@ namespace ComputerVision
                         workImage.SetPixel(i, j, Color.FromArgb(255, 255, 255));
                 }
             }
-
+            workImage.Unlock();
+            binaryImage = workImage;
             panelDestination.BackgroundImage = null;
             panelDestination.BackgroundImage = workImage.GetBitMap();
-            workImage.Unlock();
+            
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -2166,44 +2198,17 @@ namespace ComputerVision
                     contourImage.SetPixel(i, j, Color.FromArgb(0, 0, 0));
                 }
             }
+            initializeHoughRadVect();
 
             for (r = Convert.ToInt16(minRadiustxt.Text); r <= Convert.ToInt16(maxRadiustxt.Text); r += Convert.ToInt16(radiusSteptxt.Text))
             {     //radius here
-                clearHoughMatrix();
+                clearImageMatrix(hough);
                 for (int i = 0; i < workImage.Width; i++)
                 {
                     for (int j = 0; j < workImage.Height; j++)
-                    { //&& (j == 0 || (workImage.GetPixel(i,j-1) == Color.Black))
-                        //contourImage.SetPixel(i, j, workImage.GetPixel(i, j));
-                        /*if ((workImage.GetPixel(i, j) == Color.FromArgb(255, 255, 255)) && (j == 0 || (workImage.GetPixel(i, j - 1) == Color.FromArgb(0, 0, 0))))
-                        {
-                            x = i;
-                            y = j;
-                            workImage.SetPixel(i, j, Color.Red);
-                            MarkCircleEdge(i, j, r);
-                            //contourImage.SetPixel(i, j, Color.FromArgb(255, 255, 255)); //write in the matrix here!
-                            last = 0;
-                            next = GetNext(x, y, last);
-
-                            while (workImage.GetPixel(x + contourX[next], y + contourY[next]) == Color.FromArgb(255, 255, 255))
-                            {
-                                x += contourX[next];
-                                y += contourY[next];
-                                workImage.SetPixel(x, y, Color.Red);
-
-                                MarkCircleEdge(i, j, r);
-                                //contourImage.SetPixel(x, y, Color.FromArgb(255, 255, 255)); //write in the matrix here!
-                                last = (next + 4) % 8;
-                                next = GetNext(x, y, last);
-
-                            }
-                        
-                    
-                    }*/
-                    
+                    {                     
                         if(workImage.GetPixel(i,j) == Color.FromArgb(255,255,255))
                             MarkCircleEdge(i, j, r);
-
                     }
                 }
             }
@@ -2221,11 +2226,11 @@ namespace ComputerVision
             
         }
 
-        private void clearHoughMatrix()
+        private void clearImageMatrix(int[,] matrix)
         {
             for (int i = 0; i < workImage.Width; i++)
                 for (int j = 0; j < workImage.Height; j++)
-                    hough[i, j] = 0;
+                    matrix[i, j] = 0;
         }
 
         private Point findmaxHough()
@@ -2320,9 +2325,125 @@ namespace ComputerVision
                }
         }
 
+        private void selectHoughCentres(int actualradius) {
+            
+            for (int i = 0; i < workImage.Width; i++)
+            {
+                for (int j = 0; j < workImage.Height; j++)
+                {
+                    if (hough[i, j] < actualradius)
+                        hough[i, j] = 0;
+                }
+
+
+            }
+        }
+
+
+        private void createRegions() {
+            clearImageMatrix(regionsMtx);
+            Region reg;
+            regionsCount = 0;
+            for (int i = 0; i < binaryImage.Width; i++)
+            {
+                for (int j = 0; j < binaryImage.Height; j++)
+                {
+                    if (regionsMtx[i, j] == 0 && binaryImage.GetPixel(i, j) == Color.FromArgb(255, 255, 255))
+                    {   int area =  conquerRegion(i,j, regionsCount);
+                        regionsCount++;
+                        reg = new Region(regionsCount, area);
+                        cellRegions.Add(reg);
+                                                
+                    }
+                    
+                }
+            }
+        
+        }
+
+        private int conquerRegion(int i, int j, int region = 0) {
+            if (i >= 0 && i < binaryImage.Width && j >= 0 && j < binaryImage.Height)
+                if (binaryImage.GetPixel(i, j) == Color.FromArgb(255, 255, 255) && regionsMtx[i, j] == 0)
+                {
+                    if(region == 0){
+                        return 0 + conquerRegion(i,j,1);
+                    }
+                
+                    else{
+
+                    
+                            regionsMtx[i, j] = region;
+                            return 1 + conquerRegion(i - 1, j, regionsCount) + conquerRegion(i + 1, j, regionsCount) + conquerRegion(i, j - 1, regionsCount) + conquerRegion(i, j + 1, regionsCount) + conquerRegion(i - 1, j-1, regionsCount) + conquerRegion(i - 1, j+1, regionsCount) + conquerRegion(i+1, j - 1, regionsCount) + conquerRegion(i+1, j + 1, regionsCount);
+                        
+                  
+                        }              
+                    }
+            return 0;
+
+        }
+            
+                        
+            
+        
+
+        private void filterRegions()
+        {
+            foreach(Region element in cellRegions){
+                if (element.area < Convert.ToInt16(minRadiustxt.Text) * Math.Pow(Math.PI,2))
+                {
+                    deleteRegion(element.regNumber);
+                    regionsCount--;
+                    //cellRegions.Remove(element);
+                }
+                
+            }
+
+        
+        
+        }
+
+        private void deleteRegion(int regNum) {
+            for (int i = 0; i < binaryImage.Width; i++)
+            {
+                for (int j = 0; j < binaryImage.Height; j++)
+                {
+                    if (regionsMtx[i, j] == regNum)
+                        regionsMtx[i, j] = 0;
+                }
+            }
+        
+        }
+
+
         private void label10_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnRegions_Click(object sender, EventArgs e)
+        {
+            binaryImage.Lock();
+            createRegions();
+            filterRegions();
+            binaryImage.Unlock();
+            countTxt.Text = regionsCount.ToString();
+            regionsImage.Lock();
+            for (int i = 0; i < binaryImage.Width; i++)
+            {
+                for (int j = 0; j < binaryImage.Height; j++)
+                {
+                    if(regionsMtx[i,j] != 0)
+                        regionsImage.SetPixel(i, j, Color.FromArgb(255, 0, 255));
+                    else
+                    {
+                        regionsImage.SetPixel(i,j,Color.FromArgb(0,0,0));
+                    }
+                }
+
+            }
+            regionsImage.Unlock();
+            panelContour.BackgroundImage = null;
+            panelContour.BackgroundImage = regionsImage.GetBitMap();
         }
 
 

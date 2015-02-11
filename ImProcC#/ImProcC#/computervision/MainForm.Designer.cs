@@ -81,7 +81,7 @@ namespace ComputerVision
             this.panelContour = new System.Windows.Forms.Panel();
             this.btnContour = new System.Windows.Forms.Button();
             this.btnCircle = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
+            this.btnRegions = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
             this.minRadiustxt = new System.Windows.Forms.TextBox();
             this.maxRadiustxt = new System.Windows.Forms.TextBox();
@@ -89,6 +89,8 @@ namespace ComputerVision
             this.label11 = new System.Windows.Forms.Label();
             this.radiusSteptxt = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
+            this.countTxt = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
@@ -691,15 +693,15 @@ namespace ComputerVision
             this.btnCircle.UseVisualStyleBackColor = true;
             this.btnCircle.Click += new System.EventHandler(this.btnCircle_Click);
             // 
-            // button8
+            // btnRegions
             // 
-            this.button8.Location = new System.Drawing.Point(767, 205);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(75, 23);
-            this.button8.TabIndex = 12;
-            this.button8.Text = "button8";
-            this.button8.UseVisualStyleBackColor = true;
-            this.button8.Click += new System.EventHandler(this.btnCircle_Click);
+            this.btnRegions.Location = new System.Drawing.Point(767, 205);
+            this.btnRegions.Name = "btnRegions";
+            this.btnRegions.Size = new System.Drawing.Size(75, 23);
+            this.btnRegions.TabIndex = 12;
+            this.btnRegions.Text = "Obtain and show regions";
+            this.btnRegions.UseVisualStyleBackColor = true;
+            this.btnRegions.Click += new System.EventHandler(this.btnRegions_Click);
             // 
             // label9
             // 
@@ -762,11 +764,29 @@ namespace ComputerVision
             this.label12.TabIndex = 19;
             this.label12.Text = "Radius step";
             // 
+            // countTxt
+            // 
+            this.countTxt.Location = new System.Drawing.Point(1299, 164);
+            this.countTxt.Name = "countTxt";
+            this.countTxt.Size = new System.Drawing.Size(51, 20);
+            this.countTxt.TabIndex = 20;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(1174, 172);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(119, 13);
+            this.label13.TabIndex = 21;
+            this.label13.Text = "White Blood Cell Count:";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1362, 618);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.countTxt);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.radiusSteptxt);
             this.Controls.Add(this.label11);
@@ -774,7 +794,7 @@ namespace ComputerVision
             this.Controls.Add(this.maxRadiustxt);
             this.Controls.Add(this.minRadiustxt);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.button8);
+            this.Controls.Add(this.btnRegions);
             this.Controls.Add(this.btnCircle);
             this.Controls.Add(this.btnContour);
             this.Controls.Add(this.panelContour);
@@ -865,7 +885,7 @@ namespace ComputerVision
         private System.Windows.Forms.Panel panelContour;
         private System.Windows.Forms.Button btnContour;
         private System.Windows.Forms.Button btnCircle;
-        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Button btnRegions;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox minRadiustxt;
         private System.Windows.Forms.TextBox maxRadiustxt;
@@ -873,6 +893,8 @@ namespace ComputerVision
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox radiusSteptxt;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox countTxt;
+        private System.Windows.Forms.Label label13;
     }
 }
 
