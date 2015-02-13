@@ -29,6 +29,8 @@ namespace ComputerVision
             Height = image.Height;
             size = new Point(image.Size);
             currentBitmapWidth = size.X;
+            Lock();
+            Unlock();
         }
 
         public void Lock()
