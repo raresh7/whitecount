@@ -1810,15 +1810,17 @@ namespace ComputerVision
                     }
                 }
                 selectHoughCentres(r);
+                //findRoundCellsCentres();
             }
-           // findRoundCellsCentres();
 
+            findRoundCellsCentres();
             circlesImage.Unlock();
             drawAllDetectedCircles();
         }
 
         private void calculateCirclePerimeter(int radius) {
             int lastx = -1, lasty = -1, cx, cy;
+            circlePerimeter = 0;
             for (double i = 0; i < 360; i++)
             {
                 cx = (int)Math.Round(radius * Math.Cos(i * Math.PI / 180));
@@ -1983,7 +1985,8 @@ namespace ComputerVision
                         {
                             for (int j = 0; j < workImage.Height; j++)
                             {
-                                if (regionsMtx[i, j] == element.regNumber && circleLikelihood[i, j] < maxPerc)// && circleLikelihood[i, j] != 0)
+                                if (regionsMtx[i, j] == element.regNumber && circleLikelihood[i, j] != maxPerc)// && circleLikelihood[i, j] != 0)     && (element.area * 90 / 100 >( Math.PI * Math.Pow(houghradius[i, j], 2)))
+
                                     circleLikelihood[i, j] = 0;
                             }
                         }
@@ -2003,7 +2006,7 @@ namespace ComputerVision
                 for (int j = 0; j < workImage.Height; j++)
                 {
                     likelihood = hough[i, j] * 100 / circlePerimeter;
-                    if (likelihood > PERCENTAGE && likelihood > circleLikelihood[i, j]) //PERCENTAGE*circlePerimeter/360
+                    if (likelihood > PERCENTAGE && likelihood > circleLikelihood[i, j] && regionsMtx[i,j] != 0) //PERCENTAGE*circlePerimeter/360
                     {
                         circleLikelihood[i, j] = likelihood;
                         houghradius[i, j] = currentRadius;
@@ -2062,12 +2065,14 @@ namespace ComputerVision
 
         private void filterRegions()
         {
-            foreach(Region element in cellRegions){
+            List<Region> rmv = new List<Region>();
+            rmv.AddRange(cellRegions);
+            foreach(Region element in rmv){
                 if (element.area < Convert.ToInt16(minRadiustxt.Text) * Math.Pow(Math.PI,2))
                 {
                     deleteRegion(element.regNumber);
                     regionsCount--;
-                    //cellRegions.Remove(element);
+                    cellRegions.Remove(element);
                 }
                 
             }
