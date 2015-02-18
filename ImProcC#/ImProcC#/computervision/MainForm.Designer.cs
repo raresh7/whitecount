@@ -32,14 +32,6 @@ namespace ComputerVision
             this.panelDestination = new System.Windows.Forms.Panel();
             this.buttonLoad = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.button5 = new System.Windows.Forms.Button();
-            this.pseudoMedian = new System.Windows.Forms.Button();
-            this.median = new System.Windows.Forms.Button();
-            this.numericUpDown5 = new System.Windows.Forms.NumericUpDown();
-            this.label7 = new System.Windows.Forms.Label();
-            this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
-            this.label6 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.buttonFTS3 = new System.Windows.Forms.Button();
             this.buttonFTS2 = new System.Windows.Forms.Button();
@@ -68,9 +60,7 @@ namespace ComputerVision
             this.countTxt = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.panelCircles = new System.Windows.Forms.Panel();
-            this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
+            this.circleTxt = new System.Windows.Forms.TextBox();
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
             this.SuspendLayout();
@@ -92,7 +82,7 @@ namespace ComputerVision
             this.panelDestination.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panelDestination.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panelDestination.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.panelDestination.Location = new System.Drawing.Point(388, 191);
+            this.panelDestination.Location = new System.Drawing.Point(388, 172);
             this.panelDestination.Name = "panelDestination";
             this.panelDestination.Size = new System.Drawing.Size(320, 240);
             this.panelDestination.TabIndex = 1;
@@ -106,115 +96,6 @@ namespace ComputerVision
             this.buttonLoad.Text = "Load";
             this.buttonLoad.UseVisualStyleBackColor = true;
             this.buttonLoad.Click += new System.EventHandler(this.buttonLoad_Click);
-            // 
-            // panel2
-            // 
-            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel2.Controls.Add(this.button5);
-            this.panel2.Controls.Add(this.pseudoMedian);
-            this.panel2.Controls.Add(this.median);
-            this.panel2.Controls.Add(this.numericUpDown5);
-            this.panel2.Controls.Add(this.label7);
-            this.panel2.Controls.Add(this.numericUpDown4);
-            this.panel2.Controls.Add(this.label6);
-            this.panel2.Location = new System.Drawing.Point(12, 365);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(349, 102);
-            this.panel2.TabIndex = 4;
-            // 
-            // button5
-            // 
-            this.button5.Location = new System.Drawing.Point(82, 69);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(136, 22);
-            this.button5.TabIndex = 8;
-            this.button5.Text = "Sorted";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
-            // 
-            // pseudoMedian
-            // 
-            this.pseudoMedian.Location = new System.Drawing.Point(208, 41);
-            this.pseudoMedian.Name = "pseudoMedian";
-            this.pseudoMedian.Size = new System.Drawing.Size(136, 22);
-            this.pseudoMedian.TabIndex = 7;
-            this.pseudoMedian.Text = "Pseudo median filter";
-            this.pseudoMedian.UseVisualStyleBackColor = true;
-            this.pseudoMedian.Click += new System.EventHandler(this.pseudoMedian_Click);
-            // 
-            // median
-            // 
-            this.median.Location = new System.Drawing.Point(208, 8);
-            this.median.Name = "median";
-            this.median.Size = new System.Drawing.Size(136, 22);
-            this.median.TabIndex = 6;
-            this.median.Text = "Median filter";
-            this.median.UseVisualStyleBackColor = true;
-            this.median.Click += new System.EventHandler(this.median_Click);
-            // 
-            // numericUpDown5
-            // 
-            this.numericUpDown5.Location = new System.Drawing.Point(82, 43);
-            this.numericUpDown5.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.numericUpDown5.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDown5.Name = "numericUpDown5";
-            this.numericUpDown5.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDown5.TabIndex = 5;
-            this.numericUpDown5.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDown5.ValueChanged += new System.EventHandler(this.numericUpDown5_ValueChanged);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(4, 45);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(64, 13);
-            this.label7.TabIndex = 4;
-            this.label7.Text = "Outlier prag:";
-            // 
-            // numericUpDown4
-            // 
-            this.numericUpDown4.Location = new System.Drawing.Point(82, 10);
-            this.numericUpDown4.Maximum = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            this.numericUpDown4.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDown4.Name = "numericUpDown4";
-            this.numericUpDown4.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDown4.TabIndex = 3;
-            this.numericUpDown4.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDown4.ValueChanged += new System.EventHandler(this.numericUpDown4_ValueChanged);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(4, 12);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(25, 13);
-            this.label6.TabIndex = 0;
-            this.label6.Text = "FTJ";
             // 
             // panel3
             // 
@@ -298,12 +179,12 @@ namespace ComputerVision
             this.panel4.Controls.Add(this.btnContour);
             this.panel4.Location = new System.Drawing.Point(367, 473);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(341, 94);
+            this.panel4.Size = new System.Drawing.Size(341, 98);
             this.panel4.TabIndex = 6;
             // 
             // buttonSobel
             // 
-            this.buttonSobel.Location = new System.Drawing.Point(190, 32);
+            this.buttonSobel.Location = new System.Drawing.Point(190, 54);
             this.buttonSobel.Name = "buttonSobel";
             this.buttonSobel.Size = new System.Drawing.Size(109, 23);
             this.buttonSobel.TabIndex = 5;
@@ -313,7 +194,7 @@ namespace ComputerVision
             // 
             // buttonPrewit
             // 
-            this.buttonPrewit.Location = new System.Drawing.Point(109, 32);
+            this.buttonPrewit.Location = new System.Drawing.Point(109, 54);
             this.buttonPrewit.Name = "buttonPrewit";
             this.buttonPrewit.Size = new System.Drawing.Size(75, 23);
             this.buttonPrewit.TabIndex = 4;
@@ -323,7 +204,7 @@ namespace ComputerVision
             // 
             // buttonRoberts
             // 
-            this.buttonRoberts.Location = new System.Drawing.Point(28, 32);
+            this.buttonRoberts.Location = new System.Drawing.Point(28, 54);
             this.buttonRoberts.Name = "buttonRoberts";
             this.buttonRoberts.Size = new System.Drawing.Size(75, 23);
             this.buttonRoberts.TabIndex = 3;
@@ -333,7 +214,7 @@ namespace ComputerVision
             // 
             // buttonLaplace2
             // 
-            this.buttonLaplace2.Location = new System.Drawing.Point(190, 3);
+            this.buttonLaplace2.Location = new System.Drawing.Point(190, 13);
             this.buttonLaplace2.Name = "buttonLaplace2";
             this.buttonLaplace2.Size = new System.Drawing.Size(109, 23);
             this.buttonLaplace2.TabIndex = 2;
@@ -343,7 +224,7 @@ namespace ComputerVision
             // 
             // buttonLaplace
             // 
-            this.buttonLaplace.Location = new System.Drawing.Point(107, 3);
+            this.buttonLaplace.Location = new System.Drawing.Point(107, 13);
             this.buttonLaplace.Name = "buttonLaplace";
             this.buttonLaplace.Size = new System.Drawing.Size(75, 23);
             this.buttonLaplace.TabIndex = 1;
@@ -353,7 +234,7 @@ namespace ComputerVision
             // 
             // btnContour
             // 
-            this.btnContour.Location = new System.Drawing.Point(28, 3);
+            this.btnContour.Location = new System.Drawing.Point(28, 13);
             this.btnContour.Name = "btnContour";
             this.btnContour.Size = new System.Drawing.Size(75, 23);
             this.btnContour.TabIndex = 10;
@@ -404,11 +285,11 @@ namespace ComputerVision
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(1203, 454);
+            this.label9.Location = new System.Drawing.Point(1177, 454);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(35, 13);
+            this.label9.Size = new System.Drawing.Size(114, 13);
             this.label9.TabIndex = 13;
-            this.label9.Text = "label9";
+            this.label9.Text = "Round Cells Detected:";
             // 
             // minRadiustxt
             // 
@@ -488,11 +369,19 @@ namespace ComputerVision
             this.panelCircles.Size = new System.Drawing.Size(320, 240);
             this.panelCircles.TabIndex = 22;
             // 
+            // circleTxt
+            // 
+            this.circleTxt.Location = new System.Drawing.Point(1294, 451);
+            this.circleTxt.Name = "circleTxt";
+            this.circleTxt.Size = new System.Drawing.Size(56, 20);
+            this.circleTxt.TabIndex = 23;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1362, 618);
+            this.Controls.Add(this.circleTxt);
             this.Controls.Add(this.panelCircles);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.countTxt);
@@ -509,17 +398,12 @@ namespace ComputerVision
             this.Controls.Add(this.btnHue);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel3);
-            this.Controls.Add(this.panel2);
             this.Controls.Add(this.buttonLoad);
             this.Controls.Add(this.panelDestination);
             this.Controls.Add(this.panelSource);
             this.Name = "MainForm";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.MainForm_Load);
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             this.panel4.ResumeLayout(false);
@@ -534,14 +418,6 @@ namespace ComputerVision
         private System.Windows.Forms.Panel panelDestination;
         private System.Windows.Forms.Button buttonLoad;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.NumericUpDown numericUpDown4;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.NumericUpDown numericUpDown5;
-        private System.Windows.Forms.Button median;
-        private System.Windows.Forms.Button pseudoMedian;
-        private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Button buttonFTS1;
         private System.Windows.Forms.Button button7;
@@ -570,6 +446,7 @@ namespace ComputerVision
         private System.Windows.Forms.TextBox countTxt;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Panel panelCircles;
+        private System.Windows.Forms.TextBox circleTxt;
     }
 }
 

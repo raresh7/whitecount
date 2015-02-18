@@ -46,7 +46,7 @@ namespace ComputerVision
         private int TranslateX = 0;
         private int TranslateY = 1;
         Color[,] pixels;
-        private int[] contourX = { 0, 1, 1, 1, 0, -1, -1, -1 }, contourY = { -1, -1, 0, 1, 1, 1, 0, -1 }; //posibil sa fie inversate
+        private int[] contourX = { 0, 1, 1, 1, 0, -1, -1, -1 }, contourY = { -1, -1, 0, 1, 1, 1, 0, -1 }; 
         private int[,] hough;
         private int[,] regionsMtx;
         private int maxhough;
@@ -55,6 +55,7 @@ namespace ComputerVision
         private int houghmtxcount;
         private int regionsCount = 0;
         private int circlePerimeter;
+        private int circleCount;
         private List<Circle> circles = new List<Circle>();
         private List<Region> cellRegions = new List<Region>();
 
@@ -195,6 +196,7 @@ namespace ComputerVision
         {
 
         }
+        /*
       private void numericUpDown4_ValueChanged(object sender, EventArgs e)
         {
             int n = (int)numericUpDown4.Value;
@@ -409,7 +411,7 @@ namespace ComputerVision
             panelDestination.BackgroundImage = workImage.GetBitMap();
             workImage.Unlock();
         }
-
+        */
         public int Min(int a, int b, int c)
         {
             return Math.Min(Math.Min(a, b), c);
@@ -1793,6 +1795,7 @@ namespace ComputerVision
             findRoundCellsCentres();
             circlesImage.Unlock();
             drawAllDetectedCircles();
+            circleTxt.Text = circleCount.ToString();
         }
 
         private void calculateCirclePerimeter(int radius) {
@@ -1938,6 +1941,7 @@ namespace ComputerVision
         private void findRoundCellsCentres()
         {
             double maxPerc;
+            circleCount = 0;
             foreach (Region element in cellRegions)
             {
                     maxPerc = 0;
@@ -1956,6 +1960,8 @@ namespace ComputerVision
                             }*/
                         }
                     }
+                    if (maxPerc != 0)
+                        circleCount++;
                    // if (maxPerc > 0)
                    // {
                         for (int i = 0; i < workImage.Width; i++)
