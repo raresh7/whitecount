@@ -48,15 +48,14 @@ namespace ComputerVision
             this.button7 = new System.Windows.Forms.Button();
             this.buttonFTS1 = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.buttonFreiChen = new System.Windows.Forms.Button();
             this.buttonSobel = new System.Windows.Forms.Button();
             this.buttonPrewit = new System.Windows.Forms.Button();
             this.buttonRoberts = new System.Windows.Forms.Button();
             this.buttonLaplace2 = new System.Windows.Forms.Button();
             this.buttonLaplace = new System.Windows.Forms.Button();
+            this.btnContour = new System.Windows.Forms.Button();
             this.btnHue = new System.Windows.Forms.Button();
             this.panelContour = new System.Windows.Forms.Panel();
-            this.btnContour = new System.Windows.Forms.Button();
             this.btnCircle = new System.Windows.Forms.Button();
             this.btnRegions = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
@@ -291,7 +290,6 @@ namespace ComputerVision
             // panel4
             // 
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel4.Controls.Add(this.buttonFreiChen);
             this.panel4.Controls.Add(this.buttonSobel);
             this.panel4.Controls.Add(this.buttonPrewit);
             this.panel4.Controls.Add(this.buttonRoberts);
@@ -302,16 +300,6 @@ namespace ComputerVision
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(341, 94);
             this.panel4.TabIndex = 6;
-            // 
-            // buttonFreiChen
-            // 
-            this.buttonFreiChen.Location = new System.Drawing.Point(28, 61);
-            this.buttonFreiChen.Name = "buttonFreiChen";
-            this.buttonFreiChen.Size = new System.Drawing.Size(271, 23);
-            this.buttonFreiChen.TabIndex = 6;
-            this.buttonFreiChen.Text = "Frei-Chen";
-            this.buttonFreiChen.UseVisualStyleBackColor = true;
-            this.buttonFreiChen.Click += new System.EventHandler(this.buttonFreiChen_Click);
             // 
             // buttonSobel
             // 
@@ -363,6 +351,16 @@ namespace ComputerVision
             this.buttonLaplace.UseVisualStyleBackColor = true;
             this.buttonLaplace.Click += new System.EventHandler(this.buttonLaplace_Click);
             // 
+            // btnContour
+            // 
+            this.btnContour.Location = new System.Drawing.Point(28, 3);
+            this.btnContour.Name = "btnContour";
+            this.btnContour.Size = new System.Drawing.Size(75, 23);
+            this.btnContour.TabIndex = 10;
+            this.btnContour.Text = "Contour following";
+            this.btnContour.UseVisualStyleBackColor = true;
+            this.btnContour.Click += new System.EventHandler(this.btnContour_Click);
+            // 
             // btnHue
             // 
             this.btnHue.Location = new System.Drawing.Point(286, 327);
@@ -382,16 +380,6 @@ namespace ComputerVision
             this.panelContour.Name = "panelContour";
             this.panelContour.Size = new System.Drawing.Size(320, 240);
             this.panelContour.TabIndex = 9;
-            // 
-            // btnContour
-            // 
-            this.btnContour.Location = new System.Drawing.Point(28, 3);
-            this.btnContour.Name = "btnContour";
-            this.btnContour.Size = new System.Drawing.Size(75, 23);
-            this.btnContour.TabIndex = 10;
-            this.btnContour.Text = "Contour following";
-            this.btnContour.UseVisualStyleBackColor = true;
-            this.btnContour.Click += new System.EventHandler(this.btnContour_Click);
             // 
             // btnCircle
             // 
@@ -567,7 +555,6 @@ namespace ComputerVision
         private System.Windows.Forms.Button buttonRoberts;
         private System.Windows.Forms.Button buttonPrewit;
         private System.Windows.Forms.Button buttonSobel;
-        private System.Windows.Forms.Button buttonFreiChen;
         private System.Windows.Forms.Button btnHue;
         private System.Windows.Forms.Panel panelContour;
         private System.Windows.Forms.Button btnContour;

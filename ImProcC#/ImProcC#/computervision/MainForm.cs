@@ -772,25 +772,16 @@ namespace ComputerVision
         private FastImage Laplace(FastImage image, double[,] H)
         {
 
-            //FastImage grayImage = new FastImage((Bitmap)this.image.Clone());
-            //workImage.Lock();//grayImage
             FastImage newImage = new FastImage((Bitmap)this.image.Clone());
             newImage.Lock();
 
-            /*for (int i = 0; i < grayImage.Width; ++i)
-                for (int j = 0; j < grayImage.Height; ++j)
-                {
-                    Color c = grayImage.GetPixel(i, j);
-                    int gr = (c.R + c.G + c.B) / 3;
-                    grayImage.SetPixel(i, j, Color.FromArgb(gr, gr, gr));
-                }*/
 
 
 
             for (int i = 1; i < newImage.Width - 1; ++i)
                 for (int j = 1; j < newImage.Height - 1; ++j)
                 {
-                    Color col = Convolution(workImage, i, j, H); //grayImage
+                    Color col = Convolution(workImage, i, j, H); 
                     newImage.SetPixel(i, j, Color.FromArgb(col.R, col.G, col.B));
                 }
             for (int j = 0; j < newImage.Height; ++j)
@@ -798,7 +789,6 @@ namespace ComputerVision
             for (int i = 0; i < newImage.Width; ++i)
                 newImage.SetPixel(i, 0, newImage.GetPixel(i, 1));
 
-            //workImage.Unlock();//grayImage
             newImage.Unlock();
             return newImage;
         }
@@ -854,15 +844,7 @@ namespace ComputerVision
         private void Roberts()
         {
             FastImage grayImage = new FastImage((Bitmap)this.image.Clone());
-
-            //FastImage workImage = new FastImage((Bitmap)this.image.Clone());
-            //workImage.Lock();
             grayImage.Lock();
-            //grayImage = workImage;
-            //workImage = workImage;
-
-            // 
-
 
             for (int i = 0; i < grayImage.Width; ++i)
                 for (int j = 0; j < grayImage.Height; ++j)
@@ -897,8 +879,6 @@ namespace ComputerVision
                 workImage.SetPixel(i, 0, workImage.GetPixel(i, 1));
 
             grayImage.Unlock();
-            //workImage.Unlock();
-            //workImage = workImage;
 
         }
 
@@ -921,11 +901,9 @@ namespace ComputerVision
 
         private void Prewitt()
         {
-            FastImage grayImage = new FastImage((Bitmap)image.Clone());//= new FastImage(workImage.GetBitMap());
-            //grayImage = workImage;
+            FastImage grayImage = new FastImage((Bitmap)image.Clone());
             grayImage.Lock();
-            //FastImage workImage = new FastImage((Bitmap)this.image.Clone());
-            //workImage.Lock();
+
 
             for (int i = 0; i < grayImage.Width; ++i)
                 for (int j = 0; j < grayImage.Height; ++j)
@@ -962,8 +940,7 @@ namespace ComputerVision
                 workImage.SetPixel(i, 0, workImage.GetPixel(i, 1));
 
             grayImage.Unlock();
-            //workImage.Unlock();
-            //return workImage;
+
         }
 
         private void buttonPrewit_Click(object sender, EventArgs e)
@@ -1039,7 +1016,7 @@ namespace ComputerVision
 
             workImage.Unlock();
         }
-
+/*
         private FastImage FreiChen(FastImage image)
         {
             FastImage grayImage = new FastImage((Bitmap)this.image.Clone());
@@ -1132,7 +1109,7 @@ namespace ComputerVision
             newImage.Unlock();
             return newImage;
         }
-
+/*
         private void buttonFreiChen_Click(object sender, EventArgs e)
         {
             workImage = new FastImage((Bitmap)image.Clone());
@@ -1151,7 +1128,7 @@ namespace ComputerVision
             workImage.Unlock();
         }
 
-        private FastImage Gabor(FastImage image)
+        /*private FastImage Gabor(FastImage image)
         {
             FastImage grayImage = new FastImage((Bitmap)this.image.Clone());
             grayImage.Lock();
@@ -1260,7 +1237,7 @@ namespace ComputerVision
             panelDestination.BackgroundImage = workImage.GetBitMap();
 
             workImage.Unlock();
-        }
+        }*/
 
         public class Point
         {
@@ -1278,7 +1255,7 @@ namespace ComputerVision
                 return true;
             return false;
         }
-
+/*
         private FastImage RegionGrowing(FastImage image, int x, int y)
         {
 
@@ -1398,7 +1375,7 @@ namespace ComputerVision
             newImage.Unlock();
             return newImage;
         }
-
+        */
         private void panelSource_MouseUp(object sender, MouseEventArgs e)
         {
             workImage = new FastImage((Bitmap)image.Clone());
@@ -1407,11 +1384,11 @@ namespace ComputerVision
             int x = (int)((double)e.X / panelSource.Width * workImage.Width);
             int y = (int)((double)e.Y / panelSource.Height * workImage.Height);
 
-            FastImage newImage = RegionGrowing(workImage, x, y);
+            //FastImage newImage = RegionGrowing(workImage, x, y);
 
             workImage.Unlock();
 
-            workImage = newImage;
+           // workImage = newImage;
             workImage.Lock();
 
             panelDestination.BackgroundImage = null;
@@ -1424,13 +1401,13 @@ namespace ComputerVision
         {
 
         }
-
+        
         private double Grayscale(Color c)
         {
             return (double)(c.R + c.G + c.B) / 3;
         }
 
-
+/*
         double SAD(FastImage first, int i, int j, FastImage second, int k, int l, int N)
         {
             double sad = 0;
@@ -1445,7 +1422,7 @@ namespace ComputerVision
             }
             return sad;
         }
-
+        */
         private double Distance123(double x1, double y1, double x2, double y2)
         {
             return Math.Sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
@@ -1502,7 +1479,7 @@ namespace ComputerVision
                 }
             }
         }
-
+/*
         private void button10_Click(object sender, EventArgs e)
         {
             int BLOCK_SIZE = 9;
@@ -1557,7 +1534,7 @@ namespace ComputerVision
             workImageSecondary.Unlock();
             workImageFirst.Unlock();
         }
-
+        */
         private void btnHue_Click(object sender, EventArgs e)
         {
             Color color;
@@ -1895,7 +1872,7 @@ namespace ComputerVision
             {
                 cx = x + (int)Math.Round(radius * Math.Cos(i * Math.PI/180));
                 cy = y + (int)Math.Round(radius * Math.Sin(i * Math.PI / 180));
-                if ((cx != lastx || cy != lasty) && (cy >= 0 && cx >= 0 && cx < workImage.Width && cy < workImage.Height)) // && cx%10 == 0 && cy%10 == 0
+                if ((cx != lastx || cy != lasty) && (cy >= 0 && cx >= 0 && cx < workImage.Width && cy < workImage.Height))
                 {
                     lastx = cx;
                     lasty = cy;
