@@ -33,6 +33,7 @@ namespace ComputerVision
             this.buttonLoad = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.btnSmoothen = new System.Windows.Forms.Button();
             this.buttonFTS3 = new System.Windows.Forms.Button();
             this.buttonFTS2 = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
@@ -61,7 +62,6 @@ namespace ComputerVision
             this.label13 = new System.Windows.Forms.Label();
             this.panelCircles = new System.Windows.Forms.Panel();
             this.circleTxt = new System.Windows.Forms.TextBox();
-            this.btnSmoothen = new System.Windows.Forms.Button();
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
             this.SuspendLayout();
@@ -112,6 +112,16 @@ namespace ComputerVision
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(349, 98);
             this.panel3.TabIndex = 5;
+            // 
+            // btnSmoothen
+            // 
+            this.btnSmoothen.Location = new System.Drawing.Point(172, 70);
+            this.btnSmoothen.Name = "btnSmoothen";
+            this.btnSmoothen.Size = new System.Drawing.Size(147, 23);
+            this.btnSmoothen.TabIndex = 6;
+            this.btnSmoothen.Text = "Smoothen image";
+            this.btnSmoothen.UseVisualStyleBackColor = true;
+            this.btnSmoothen.Click += new System.EventHandler(this.btnSmoothen_Click);
             // 
             // buttonFTS3
             // 
@@ -220,7 +230,7 @@ namespace ComputerVision
             this.buttonLaplace2.Name = "buttonLaplace2";
             this.buttonLaplace2.Size = new System.Drawing.Size(109, 23);
             this.buttonLaplace2.TabIndex = 2;
-            this.buttonLaplace2.Text = "Laplace (Prewit)";
+            this.buttonLaplace2.Text = "Laplace (Prewitt)";
             this.buttonLaplace2.UseVisualStyleBackColor = true;
             this.buttonLaplace2.Click += new System.EventHandler(this.buttonLaplace2_Click);
             // 
@@ -377,16 +387,6 @@ namespace ComputerVision
             this.circleTxt.Name = "circleTxt";
             this.circleTxt.Size = new System.Drawing.Size(56, 20);
             this.circleTxt.TabIndex = 23;
-            // 
-            // btnSmoothen
-            // 
-            this.btnSmoothen.Location = new System.Drawing.Point(172, 70);
-            this.btnSmoothen.Name = "btnSmoothen";
-            this.btnSmoothen.Size = new System.Drawing.Size(147, 23);
-            this.btnSmoothen.TabIndex = 6;
-            this.btnSmoothen.Text = "Smoothen image";
-            this.btnSmoothen.UseVisualStyleBackColor = true;
-            this.btnSmoothen.Click += new System.EventHandler(this.btnSmoothen_Click);
             // 
             // MainForm
             // 

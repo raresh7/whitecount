@@ -63,6 +63,11 @@ namespace ComputerVision
 
         private void buttonLoad_Click(object sender, EventArgs e)
         {
+
+            panelContour.BackgroundImage = null;
+            panelDestination.BackgroundImage = null;
+            panelCircles.BackgroundImage = null;
+
             openFileDialog.ShowDialog();
             sSourceFileName = openFileDialog.FileName;
             panelSource.BackgroundImage = new Bitmap(sSourceFileName);
