@@ -61,6 +61,7 @@ namespace ComputerVision
             this.label13 = new System.Windows.Forms.Label();
             this.panelCircles = new System.Windows.Forms.Panel();
             this.circleTxt = new System.Windows.Forms.TextBox();
+            this.btnSmoothen = new System.Windows.Forms.Button();
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
             this.SuspendLayout();
@@ -100,6 +101,7 @@ namespace ComputerVision
             // panel3
             // 
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel3.Controls.Add(this.btnSmoothen);
             this.panel3.Controls.Add(this.buttonFTS3);
             this.panel3.Controls.Add(this.buttonFTS2);
             this.panel3.Controls.Add(this.label8);
@@ -134,7 +136,7 @@ namespace ComputerVision
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(169, 54);
+            this.label8.Location = new System.Drawing.Point(169, 50);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(25, 13);
             this.label8.TabIndex = 3;
@@ -142,11 +144,11 @@ namespace ComputerVision
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(200, 51);
+            this.textBox1.Location = new System.Drawing.Point(199, 47);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(120, 20);
             this.textBox1.TabIndex = 2;
-            this.textBox1.Text = "0,3";
+            this.textBox1.Text = "0,6";
             // 
             // button7
             // 
@@ -376,6 +378,16 @@ namespace ComputerVision
             this.circleTxt.Size = new System.Drawing.Size(56, 20);
             this.circleTxt.TabIndex = 23;
             // 
+            // btnSmoothen
+            // 
+            this.btnSmoothen.Location = new System.Drawing.Point(172, 70);
+            this.btnSmoothen.Name = "btnSmoothen";
+            this.btnSmoothen.Size = new System.Drawing.Size(147, 23);
+            this.btnSmoothen.TabIndex = 6;
+            this.btnSmoothen.Text = "Smoothen image";
+            this.btnSmoothen.UseVisualStyleBackColor = true;
+            this.btnSmoothen.Click += new System.EventHandler(this.btnSmoothen_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -447,6 +459,7 @@ namespace ComputerVision
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Panel panelCircles;
         private System.Windows.Forms.TextBox circleTxt;
+        private System.Windows.Forms.Button btnSmoothen;
     }
 }
 

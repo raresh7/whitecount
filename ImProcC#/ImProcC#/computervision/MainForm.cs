@@ -37,14 +37,10 @@ namespace ComputerVision
         private FastImage workImage;
         private FastImage contourImage;
         private FastImage workImage1;
-        private FastImage workImageSecondary;
         private FastImage binaryImage;
         private FastImage regionsImage;
         private FastImage circlesImage;
-        private Bitmap secondaryImage;
         private Bitmap image = null;
-        private int TranslateX = 0;
-        private int TranslateY = 1;
         Color[,] pixels;
         private int[] contourX = { 0, 1, 1, 1, 0, -1, -1, -1 }, contourY = { -1, -1, 0, 1, 1, 1, 0, -1 }; 
         private int[,] hough;
@@ -741,11 +737,11 @@ namespace ComputerVision
                     double cc = 1.0;
                     Color col = newImage.GetPixel(i, j);
                     Color colL = Convolution(newImage, i, j, H);
-                    //int r = Clamp(0, 255, Convert.ToInt32(c * col.R / (2 * c - 1) - (1 - c) * colL.R / (2 * c - 1)));
-                    //int g = Clamp(0, 255, Convert.ToInt32(c * col.G / (2 * c - 1) - (1 - c) * colL.G / (2 * c - 1)));
-                    //int b = Clamp(0, 255, Convert.ToInt32(c * col.B / (2 * c - 1) - (1 - c) * colL.B / (2 * c - 1)));
-                    newImage.SetPixel(i, j, colL);
-                    //newImage.SetPixel(i, j, Color.FromArgb(r, g, b));
+                    int r = Clamp(0, 255, Convert.ToInt32(c * col.R / (2 * c - 1) - (1 - c) * colL.R / (2 * c - 1)));
+                    int g = Clamp(0, 255, Convert.ToInt32(c * col.G / (2 * c - 1) - (1 - c) * colL.G / (2 * c - 1)));
+                    int b = Clamp(0, 255, Convert.ToInt32(c * col.B / (2 * c - 1) - (1 - c) * colL.B / (2 * c - 1)));
+                    //newImage.SetPixel(i, j, colL);
+                    newImage.SetPixel(i, j, Color.FromArgb(r, g, b));
                 }
 
             newImage.Unlock();
@@ -1929,14 +1925,6 @@ namespace ComputerVision
 
         }
 
-        /*private void initializeHoughRadVect() {
-            houghmtxcount = (((Convert.ToInt16(maxRadiustxt.Text) - Convert.ToInt16(minRadiustxt.Text)) +1) / Convert.ToInt16(radiusSteptxt.Text));
-            houghradius = new int[houghmtxcount];
-            for (int i = 0; i < houghmtxcount; i ++ ) {
-                    houghradius[i] = Convert.ToInt16(minRadiustxt.Text) + i*Convert.ToInt16(radiusSteptxt.Text);
-
-               }
-        }*/
 
         private void findRoundCellsCentres()
         {
@@ -2112,6 +2100,38 @@ namespace ComputerVision
             panelContour.BackgroundImage = null;
             panelContour.BackgroundImage = regionsImage.GetBitMap();
         }
+
+        private void btnSmoothen_Click(object sender, EventArgs e)
+        {
+            
+            FastImage newImage = new FastImage(workImage.GetBitMap());
+
+            
+            
+            double[,] H = new double[3, 3] { 
+                { 1.0 / 9.0, 1.0 / 9.0, 1.0 / 9.0 },
+                { 1.0 / 9.0, 1.0 / 9.0, 1.0 / 9.0 },
+                { 1.0 / 9.0, 1.0 / 9.0, 1.0 / 9.0} };
+
+            newImage.Lock();
+            for (int i = 1; i < newImage.Width - 1; ++i)
+                for (int j = 1; j < newImage.Height - 1; ++j)
+                {
+                   
+                    Color col = newImage.GetPixel(i, j);
+                    Color colL = Convolution(newImage, i, j, H);
+                    newImage.SetPixel(i, j, colL);
+                  
+                }
+
+           
+            newImage.Unlock();
+            workImage = new FastImage(newImage.GetBitMap());
+            panelDestination.BackgroundImage = null;
+            panelDestination.BackgroundImage = workImage.GetBitMap();
+            
+        }
+        
 
 
 
